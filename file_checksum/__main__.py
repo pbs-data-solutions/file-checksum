@@ -115,6 +115,8 @@ def generate(
 
     with console.status("Generating checksums"):
         for file_path in checksum_path.iterdir():
+            print(file_path)
+            print(file_path.is_file())
             if file_path.is_file():
                 _process_checksum(
                     file_path,
