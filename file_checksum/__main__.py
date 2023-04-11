@@ -55,6 +55,9 @@ def _process_checksum(
     except IsADirectoryError:
         console.print(f"{file_path} is a directory and cannot be opened as a file", style="error")
         raise Exit(1)
+    except Exception as e:
+        console.print(f"An error occurred tying to open {file_path}: {e}")
+        raise Exit(1)
 
     checksum_output = f"{checksum_type.value} checksum: {file_hash.hexdigest()} - {file_path.name}"
 
