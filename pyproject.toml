@@ -18,9 +18,10 @@ pytest = "7.3.0"
 pytest-cov = "4.0.0"
 ruff = "0.0.261"
 black = "23.3.0"
+tomli = {version = "2.0.1", python = "<3.11"}
 
 [tool.poetry.scripts]
-checksum = "file_checksum:app"
+checksum = "file_checksum.__main__:app"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -57,7 +58,7 @@ disallow_untyped_defs = false
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=file_checksum --cov-report term-missing"
+addopts = "--cov=file_checksum --cov-report term-missing --no-cov-on-fail"
 
 [tool.ruff]
 select = ["E", "F", "T201", "T203", "I001"]
