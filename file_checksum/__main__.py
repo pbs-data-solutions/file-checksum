@@ -44,9 +44,6 @@ def _process_checksum(
     if not output_file:
         verbose = True
 
-    print(file_path)
-    print(file_path.is_file())
-
     try:
         with open(file_path, "rb") as f:
             if checksum_type == ChecksumType.SHA256:
@@ -109,6 +106,8 @@ def generate(
     else:
         verbose = True
 
+    print(checksum_path)
+    print(checksum_path.is_file())
     if checksum_path.is_file():
         _process_checksum(
             checksum_path, output_file=output_file, checksum_type=checksum_type, verbose=verbose
