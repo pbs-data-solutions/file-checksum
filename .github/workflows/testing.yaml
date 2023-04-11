@@ -45,7 +45,7 @@ jobs:
         poetry run black file_checksum tests --check
     - name: Lint with ruff
       run: |
-        poetry run ruff file_checksum tests
+        poetry run ruff check .
     - name: mypy check
       run: |
         poetry run mypy .
