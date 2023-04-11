@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "file-checksum"
+version = "0.1.0"
+description = "Generate and validate checksums for files"
+authors = ["PBS Data Solutions, LLC <paul@pbsdatasolutions.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = "0.7.0"
+rich = "13.3.3"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "1.2.0"
+pre-commit = "3.2.2"
+pytest = "7.3.0"
+pytest-cov = "4.0.0"
+ruff = "0.0.261"
+black = "23.3.0"
+
+[tool.poetry.scripts]
+checksum = "file_checksum:app"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.egg
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.tox
+  | \.venv
+  | \venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | setup.py
+)/
+'''
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=file_checksum --cov-report term-missing"
+
+[tool.ruff]
+select = ["E", "F", "T201", "T203", "I001"]
+ignore = ["E501"]
+line-length = 100
+fix = true
