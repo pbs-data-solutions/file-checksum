@@ -72,6 +72,11 @@ def test_process_checksum_directory_error(tmp_path):
         _process_checksum(tmp_path)
 
 
+def test_process_checksum_exception():
+    with pytest.raises(Exit):
+        _process_checksum(Path("bad"))
+
+
 @pytest.mark.parametrize("checksum_type", ["md5", "sha1", "sha256", None])
 @pytest.mark.parametrize("checksum_type_flag", ["-c", "--checksum-type"])
 @pytest.mark.parametrize("verbose", ["-v", "--verbose", None])
