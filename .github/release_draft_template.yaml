@@ -4,11 +4,12 @@ exclude-labels:
   - 'dependencies'
   - 'skip-changelog'
 version-resolver:
-  minor:
+  major:
     labels:
       - 'breaking-change'
+  minor:
+    labels:
       - 'enhancement'
-      - 'feature'
   default: patch
 categories:
   - title: 'Features'
@@ -17,7 +18,7 @@ categories:
       - 'enhancement'
   - title: 'Bug Fixes'
     labels:
-      - 'bug-fix'
+      - 'bug'
   - title: '⚠ Breaking changes'
     label: 'breaking-change'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
@@ -25,3 +26,5 @@ template: |
   ## Changes
 
   $CHANGES
+
+  Thanks to the contributors: $CONTRIBUTORS
