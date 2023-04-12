@@ -9,7 +9,7 @@ from rich.console import Console
 from rich.theme import Theme
 from typer import Argument, Exit, Option, Typer
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 app = Typer()
 
