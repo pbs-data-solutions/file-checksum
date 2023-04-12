@@ -83,7 +83,10 @@ def _print_successful_generation_message(verbose: bool) -> None:
 @app.command()
 def generate(
     checksum_path: Path = Argument(
-        ..., help="Path to the directory or file for which to generate checksums", exists=True
+        ...,
+        help="Path to the directory or file for which to generate checksums",
+        exists=True,
+        show_default=False,
     ),
     output_file: Path = Option(
         None,
