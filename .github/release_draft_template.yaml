@@ -5,6 +5,7 @@ exclude-labels:
   - 'skip-changelog'
 exclude-contributors:
   - 'dependabot'
+  - '@dependabot[bot]'
 version-resolver:
   major:
     labels:
