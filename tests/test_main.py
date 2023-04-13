@@ -176,6 +176,110 @@ def test_generate_directory(checksum_type, checksum_type_flag, verbose, tmp_path
         assert checksum_2.hexdigest() in result
 
 
+def test_generate_no_overwrite(tmp_path):
+    fake_dir_1 = tmp_path / "fake1"
+    fake_dir_1.mkdir()
+    fake_dir_2 = tmp_path / "fake2"
+    fake_dir_2.mkdir()
+
+    fake_file_path_1 = fake_dir_1 / "test1.xml"
+    with open(fake_file_path_1, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some test text</test>')
+
+    fake_file_path_2 = fake_dir_1 / "test2.xml"
+    with open(fake_file_path_2, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some more test text</test>')
+
+    output_file = tmp_path / "output.txt"
+    checksum_1 = get_checksum(fake_file_path_1, "sha256")
+    checksum_2 = get_checksum(fake_file_path_2, "sha256")
+
+    args = ["generate", str(fake_dir_1), "-o", str(output_file)]
+
+    runner = CliRunner()
+    runner.invoke(app, args, catch_exceptions=False)
+
+    with open(output_file, "r") as f:
+        result = f.read()
+        assert checksum_1.hexdigest() in result
+        assert checksum_2.hexdigest() in result
+
+    fake_file_path_3 = fake_dir_2 / "test3.xml"
+    with open(fake_file_path_3, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some test text</test>')
+
+    fake_file_path_4 = fake_dir_2 / "test4.xml"
+    with open(fake_file_path_4, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some more test text</test>')
+
+    checksum_3 = get_checksum(fake_file_path_3, "sha256")
+    checksum_4 = get_checksum(fake_file_path_4, "sha256")
+
+    args = ["generate", str(fake_dir_2), "-o", str(output_file)]
+
+    runner = CliRunner()
+    runner.invoke(app, args, catch_exceptions=False)
+
+    with open(output_file, "r") as f:
+        result = f.read()
+        assert checksum_1.hexdigest() in result
+        assert checksum_2.hexdigest() in result
+        assert checksum_3.hexdigest() in result
+        assert checksum_4.hexdigest() in result
+
+
+def test_generate_overwrite(tmp_path):
+    fake_dir_1 = tmp_path / "fake1"
+    fake_dir_1.mkdir()
+    fake_dir_2 = tmp_path / "fake2"
+    fake_dir_2.mkdir()
+
+    fake_file_path_1 = fake_dir_1 / "test1.xml"
+    with open(fake_file_path_1, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some test text 1</test>')
+
+    fake_file_path_2 = fake_dir_1 / "test2.xml"
+    with open(fake_file_path_2, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some test text 2</test>')
+
+    output_file = tmp_path / "output.txt"
+    checksum_1 = get_checksum(fake_file_path_1, "sha256")
+    checksum_2 = get_checksum(fake_file_path_2, "sha256")
+
+    args = ["generate", str(fake_dir_1), "-o", str(output_file), "--overwrite"]
+
+    runner = CliRunner()
+    runner.invoke(app, args, catch_exceptions=False)
+
+    with open(output_file, "r") as f:
+        result = f.read()
+        assert checksum_1.hexdigest() in result
+        assert checksum_2.hexdigest() in result
+
+    fake_file_path_3 = fake_dir_2 / "test3.xml"
+    with open(fake_file_path_3, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some test text 3</test>')
+
+    fake_file_path_4 = fake_dir_2 / "test4.xml"
+    with open(fake_file_path_4, "w") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?><test>some test text 4</test>')
+
+    checksum_3 = get_checksum(fake_file_path_3, "sha256")
+    checksum_4 = get_checksum(fake_file_path_4, "sha256")
+
+    args = ["generate", str(fake_dir_2), "-o", str(output_file), "--overwrite"]
+
+    runner = CliRunner()
+    runner.invoke(app, args, catch_exceptions=False)
+
+    with open(output_file, "r") as f:
+        result = f.read()
+        assert checksum_1.hexdigest() not in result
+        assert checksum_2.hexdigest() not in result
+        assert checksum_3.hexdigest() in result
+        assert checksum_4.hexdigest() in result
+
+
 @pytest.mark.parametrize("args", [["--version"], ["-v"]])
 def test_version(args):
     runner = CliRunner()
