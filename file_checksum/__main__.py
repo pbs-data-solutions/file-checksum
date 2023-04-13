@@ -101,6 +101,9 @@ def generate(
         help="The type of checksum to generate. [default: sha256]",
         show_default=False,
     ),
+    overwrite: bool = Option(
+        False, "--overwrite", help="Overwrite the output file rather than appending to it."
+    ),
     verbose: bool = Option(False, "--verbose", "-v", help="Provides more output while running"),
 ) -> None:
     if output_file:
@@ -109,12 +112,18 @@ def generate(
         except FileTypeError:
             console.print("Error: The output file must be a .txt file", style="error")
             raise Exit(1)
+
+        if output_file.exists() and overwrite:
+            output_file.unlink()
     else:
         verbose = True
 
     if checksum_path.is_file():
         _process_checksum(
-            checksum_path, output_file=output_file, checksum_type=checksum_type, verbose=verbose
+            checksum_path,
+            output_file=output_file,
+            checksum_type=checksum_type,
+            verbose=verbose,
         )
         _print_successful_generation_message(verbose)
         raise Exit()
