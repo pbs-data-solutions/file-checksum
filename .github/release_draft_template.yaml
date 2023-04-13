@@ -28,3 +28,9 @@ template: |
   $CHANGES
 
   Thanks to the contributors: $CONTRIBUTORS
+
+replacers:
+  - search: '/(?:and )?@dependabot-preview(?:\[bot\])?,?/g'
+    replace: ''
+  - search: '/(?:and )?@dependabot(?:\[bot\])?,?/g'
+    replace: ''
