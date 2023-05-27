@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from enum import Enum
 from hashlib import md5, sha1, sha256
 from pathlib import Path
@@ -37,7 +35,7 @@ def _check_valid_output_file_type(file_name: Path) -> None:
 def _process_checksum(
     file_path: Path,
     *,
-    output_file: Path | None = None,
+    output_file: Union[Path, None] = None,
     checksum_type: ChecksumType = ChecksumType.SHA256,
     verbose: bool = False,
 ) -> None:
