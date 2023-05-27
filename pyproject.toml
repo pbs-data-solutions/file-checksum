@@ -78,7 +78,8 @@ minversion = "6.0"
 addopts = "--cov=file_checksum --cov-report term-missing --no-cov-on-fail"
 
 [tool.ruff]
-select = ["E", "F", "T201", "T203", "I001"]
+select = ["E", "F", "UP", "I001", "T201", "T203"]
 ignore = ["E501"]
 line-length = 100
+target-version = "py38"
 fix = true

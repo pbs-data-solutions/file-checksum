@@ -96,7 +96,7 @@ def test_generate_file(checksum_type, checksum_type_flag, verbose, fake_file_pat
     runner = CliRunner()
     runner.invoke(app, args, catch_exceptions=False)
 
-    with open(output_file, "r") as f:
+    with open(output_file) as f:
         result = f.read()
         assert checksum.hexdigest() in result
 
@@ -110,7 +110,7 @@ def test_generate_file_creates_directory(fake_file_path, tmp_path):
     runner = CliRunner()
     runner.invoke(app, args, catch_exceptions=False)
 
-    with open(output_file, "r") as f:
+    with open(output_file) as f:
         result = f.read()
         assert checksum.hexdigest() in result
 
@@ -170,7 +170,7 @@ def test_generate_directory(checksum_type, checksum_type_flag, verbose, tmp_path
     runner = CliRunner()
     runner.invoke(app, args, catch_exceptions=False)
 
-    with open(output_file, "r") as f:
+    with open(output_file) as f:
         result = f.read()
         assert checksum_1.hexdigest() in result
         assert checksum_2.hexdigest() in result
@@ -199,7 +199,7 @@ def test_generate_no_overwrite(tmp_path):
     runner = CliRunner()
     runner.invoke(app, args, catch_exceptions=False)
 
-    with open(output_file, "r") as f:
+    with open(output_file) as f:
         result = f.read()
         assert checksum_1.hexdigest() in result
         assert checksum_2.hexdigest() in result
@@ -220,7 +220,7 @@ def test_generate_no_overwrite(tmp_path):
     runner = CliRunner()
     runner.invoke(app, args, catch_exceptions=False)
 
-    with open(output_file, "r") as f:
+    with open(output_file) as f:
         result = f.read()
         assert checksum_1.hexdigest() in result
         assert checksum_2.hexdigest() in result
@@ -251,7 +251,7 @@ def test_generate_overwrite(tmp_path):
     runner = CliRunner()
     runner.invoke(app, args, catch_exceptions=False)
 
-    with open(output_file, "r") as f:
+    with open(output_file) as f:
         result = f.read()
         assert checksum_1.hexdigest() in result
         assert checksum_2.hexdigest() in result
@@ -272,7 +272,7 @@ def test_generate_overwrite(tmp_path):
     runner = CliRunner()
     runner.invoke(app, args, catch_exceptions=False)
 
-    with open(output_file, "r") as f:
+    with open(output_file) as f:
         result = f.read()
         assert checksum_1.hexdigest() not in result
         assert checksum_2.hexdigest() not in result
