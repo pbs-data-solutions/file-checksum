@@ -2,7 +2,8 @@
 
 ## Where to start
 
-All contributions, bug reports, bug fixes, documentation improvements, enhancements, and ideas are welcome.
+All contributions, bug reports, bug fixes, documentation improvements, enhancements, and ideas are
+welcome.
 
 The best place to start is to check the [issues](https://github.com/pbs-data-solutions/file-checksum/issues)
 for something that interests you.
@@ -12,7 +13,8 @@ for something that interests you.
 Please include:
 
 1. A short, self-contained Python snippet reproducing the problem. You can format the code by using
-[GitHub markdown](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github). For example:
+[GitHub markdown](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github). For
+example:
 
     ```sh
     checksum generate /home/my_files -o /home/checksums.txt
@@ -35,12 +37,13 @@ cd file-checksum
 git remote add upstream git@github.com:pbs-data-solutions/file-checksum
 ```
 
-This creates the directory file-checksum and connects your repository to the upstream (main project) repository.
+This creates the directory file-checksum and connects your repository to the upstream
+(main project) repository.
 
 ### Working with the code
 
 Note: This project uses Poetry to manage dependencies. If you do not already have Poetry installed
-you will need to install it with the instuctions [here](https://python-poetry.org/docs/#installation)
+you will need to install it with the instructions [here](https://python-poetry.org/docs/#installation)
 
 First the requirements need to be installed.
 
@@ -58,8 +61,8 @@ git checkout -b my-new-feature
 ```
 
 This changes your working directory to the my-new-feature branch. Keep any changes in this branch
-specific to one bug or feature so the purpose is clear. You can have many `my-new-features` and switch
-in between them using the git checkout command.
+specific to one bug or feature so the purpose is clear. You can have many `my-new-features` and
+switch in between them using the git checkout command.
 
 When creating this branch, make sure your main branch is up to date with the latest upstream
 main version. To update your local main branch, you can do:
@@ -72,7 +75,7 @@ git pull upstream main --ff-only
 ### Code Standards and tests (ruff, black, mypy, pytest, tox, and pre-commit)
 
 file-checksum [ruff](https://github.com/charliermarsh/ruff), [Black](https://github.com/psf/black),
-and [mypy](https://mypy.readthedocs.io/en/stable/) to ensure consistant code formmating.
+and [mypy](https://mypy.readthedocs.io/en/stable/) to ensure consistent code formatting.
 
 You can run linting on your code at any time with:
 
@@ -113,7 +116,7 @@ def my_function(argument: str) -> None:
     ...
 
 
-def another_funciton(num: int) -> int:
+def another_function(num: int) -> int:
     return num + 1
 ```
 
@@ -148,7 +151,8 @@ submitting a pull request.
 
 ## Committing your code
 
-Once you have made changes to the code on your branch you can see which files have changed by running:
+Once you have made changes to the code on your branch you can see which files have changed by
+running:
 
 ```sh
 git status
@@ -172,13 +176,13 @@ fix any errors. Once the errors are fixed you can run the same git commit comman
 ## Push your changes
 
 Once your changes are ready and all linting/tests are passing you can push your changes to your
-forked repositry:
+forked repository:
 
 ```sh
 git push origin my-new-feature
 ```
 
-origin is the default name of your remote repositry on GitHub. You can see all of your remote
+origin is the default name of your remote repository on GitHub. You can see all of your remote
 repositories by running:
 
 ```sh
