@@ -28,7 +28,7 @@ jobs:
           - os: windows-latest
             artifact_name: checksum
             asset_name: file-checksum-windows-amd64.exe
-            target: x86_64-pc-windows-msvc
+            target: x86_64-pc-windows-gnu
     steps:
       - uses: actions/checkout@v4
       - name: Install Rust
