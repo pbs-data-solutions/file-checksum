@@ -64,82 +64,67 @@ fn process_checksum(
         }
     };
 
-    let hash = match checksum_type {
-        ChecksumType::Sha256 => {
-            let bytes = fs::read(file_path);
-            if let Ok(b) = bytes {
+    let bytes = fs::read(file_path);
+    if let Ok(b) = bytes {
+        let hash = match checksum_type {
+            ChecksumType::Sha256 => {
                 let mut hasher = Sha256::new();
                 hasher.update(b);
                 encode(hasher.finalize())
-            } else {
-                bail!("Error opening file");
             }
-        }
-        ChecksumType::Sha512 => {
-            let bytes = fs::read(file_path);
-            if let Ok(b) = bytes {
+            ChecksumType::Sha512 => {
                 let mut hasher = Sha512::new();
                 hasher.update(b);
                 encode(hasher.finalize())
-            } else {
-                bail!("Error opening file");
             }
-        }
-        ChecksumType::Sha1 => {
-            let bytes = fs::read(file_path);
-            if let Ok(b) = bytes {
+            ChecksumType::Sha1 => {
                 let mut hasher = Sha1::new();
                 hasher.update(b);
                 encode(hasher.finalize())
-            } else {
-                bail!("Error opening file");
             }
-        }
-        ChecksumType::Md5 => {
-            let bytes = fs::read(file_path);
-            if let Ok(b) = bytes {
+            ChecksumType::Md5 => {
                 format!("{:?}", md5::compute(b))
-            } else {
-                bail!("Error opening file");
             }
-        }
-    };
+        };
 
-    let checksum_output = format!("{checksum_type} checksum: {hash} - {file_name}");
+        let checksum_output = format!("{checksum_type} checksum: {hash} - {file_name}");
 
-    if let Some(o) = output_file {
-        let output_path = o.parent();
-        if let Some(path) = output_path {
-            if !path.exists() && fs::create_dir_all(path).is_err() {
-                bail!("Error creating directory");
+        if let Some(o) = output_file {
+            let output_path = o.parent();
+            if let Some(path) = output_path {
+                if !path.exists() && fs::create_dir_all(path).is_err() {
+                    bail!("Error creating directory");
+                }
             }
-        }
 
-        if !overwrite && o.exists() {
-            let file_result = OpenOptions::new().append(true).open(o);
+            if !overwrite && o.exists() {
+                let file_result = OpenOptions::new().append(true).open(o);
 
-            if let Ok(mut file) = file_result {
-                if let Err(e) = writeln!(file, "{}", &checksum_output) {
-                    bail!("Couldn't write to file: {}", e);
+                if let Ok(mut file) = file_result {
+                    if let Err(e) = writeln!(file, "{}", &checksum_output) {
+                        bail!("Couldn't write to file: {}", e);
+                    }
+                } else {
+                    bail!("Error opening file");
                 }
             } else {
-                bail!("Error opening file");
-            }
-        } else {
-            let file = File::create(o);
+                let file = File::create(o);
 
-            if let Ok(mut f) = file {
-                if let Err(e) = writeln!(f, "{}", &checksum_output) {
-                    bail!("Error writing file: {}", e);
+                if let Ok(mut f) = file {
+                    if let Err(e) = writeln!(f, "{}", &checksum_output) {
+                        bail!("Error writing file: {}", e);
+                    }
+                } else {
+                    bail!("Error writing file");
                 }
-            } else {
-                bail!("Error writing file");
             }
         }
-    }
 
-    if output_file.is_none() || verbose {
-        println!("{checksum_output}");
+        if output_file.is_none() || verbose {
+            println!("{checksum_output}");
+        }
+    } else {
+        bail!("Error opening file");
     }
 
     Ok(())
@@ -238,27 +223,24 @@ mod tests {
     }
 
     fn get_checksum(file: &Path, checksum_type: ChecksumType) -> String {
+        let bytes = fs::read(file).unwrap();
         match checksum_type {
             ChecksumType::Sha256 => {
-                let bytes = fs::read(file).unwrap();
                 let mut hasher = Sha256::new();
                 hasher.update(bytes);
                 encode(hasher.finalize())
             }
             ChecksumType::Sha512 => {
-                let bytes = fs::read(file).unwrap();
                 let mut hasher = Sha512::new();
                 hasher.update(bytes);
                 encode(hasher.finalize())
             }
             ChecksumType::Sha1 => {
-                let bytes = fs::read(file).unwrap();
                 let mut hasher = Sha1::new();
                 hasher.update(bytes);
                 encode(hasher.finalize())
             }
             ChecksumType::Md5 => {
-                let bytes = fs::read(file).unwrap();
                 format!("{:?}", md5::compute(bytes))
             }
         }
