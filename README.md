@@ -16,6 +16,9 @@ This program will generate checksums for either a single file, or all the files 
 cargo install --path .
 ```
 
+File Checkksum can also be installed with binaries provided with each release
+[here](https://github.com/pbs-data-solutions/file-checksum/releases).
+
 ## Usage
 
 ### Generate
