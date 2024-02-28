@@ -106,7 +106,7 @@ fn process_checksum(
         }
 
         if !overwrite && o.exists() {
-            let file_result = OpenOptions::new().write(true).append(true).open(o);
+            let file_result = OpenOptions::new().append(true).open(o);
 
             if let Ok(mut file) = file_result {
                 if let Err(e) = writeln!(file, "{}", &checksum_output) {
@@ -169,34 +169,32 @@ fn main() {
                     print_error(&e.to_string());
                     exit(1);
                 }
-            } else {
-                if let Ok(dir) = fs::read_dir(&checksum_path) {
-                    for child_result in dir {
-                        if let Ok(child) = child_result {
-                            if child.path().is_file() {
-                                if let Err(e) = process_checksum(
-                                    &child.path(),
-                                    &output_file,
-                                    &checksum_type,
-                                    overwrite,
-                                    verbose,
-                                ) {
-                                    print_error(&e.to_string());
-                                    exit(1);
-                                }
+            } else if let Ok(dir) = fs::read_dir(&checksum_path) {
+                for child_result in dir {
+                    if let Ok(child) = child_result {
+                        if child.path().is_file() {
+                            if let Err(e) = process_checksum(
+                                &child.path(),
+                                &output_file,
+                                &checksum_type,
+                                overwrite,
+                                verbose,
+                            ) {
+                                print_error(&e.to_string());
+                                exit(1);
                             }
-                        } else {
-                            print_error("Error reading file");
-                            exit(1);
                         }
+                    } else {
+                        print_error("Error reading file");
+                        exit(1);
                     }
-                } else {
-                    print_error(&format!(
-                        "Error processing files in {:?} directory",
-                        &checksum_path
-                    ));
-                    exit(1);
                 }
+            } else {
+                print_error(&format!(
+                    "Error processing files in {:?} directory",
+                    &checksum_path
+                ));
+                exit(1);
             }
         }
     }
@@ -269,7 +267,7 @@ mod tests {
     #[test]
     fn process_checksum_bad_path() {
         let dir = Path::new("bad");
-        assert!(process_checksum(&dir, &None, &ChecksumType::Sha256, false, false).is_err());
+        assert!(process_checksum(dir, &None, &ChecksumType::Sha256, false, false).is_err());
     }
 
     #[test]
