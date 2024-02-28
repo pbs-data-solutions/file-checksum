@@ -1,0 +1,83 @@
+on:
+  release:
+    types:
+      - published
+
+name: Publish binaries to release
+
+jobs:
+  publish:
+    name: Publish for ${{ matrix.os }} ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: checksum
+            asset_name: file-checksum-linux-amd64
+            target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            artifact_name: checksum
+            asset_name: file-checksum-macos-amd64
+            target: x86_64-apple-darwin
+          - os: macos-latest
+            artifact_name: checksum
+            asset_name: file-checksum-macos-aarch64
+            target: aarch64-apple-darwin
+          - os: windows-latest
+            artifact_name: checksum
+            asset_name: file-checksum-windows-amd64.exe
+            target: x86_64-pc-windows-msvc
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - name: Add target
+        run: rustup target add ${{ matrix.target }}
+      - name: Build
+        run: cargo build --release --locked --target ${{ matrix.target }}
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN}}
+          file: target/${{ matrix.target }}/release/${{ matrix.artifact_name }}
+          asset_name: ${{ matrix.asset_name }}
+          tag:
+            ${{ github.ref }}
+            # cargo-publish:
+            #   name: Publish to crates.io
+            #   runs-on: ubuntu-latest
+            #   steps:
+            #     - uses: actions/checkout@v4
+            #     - name: Install Rust
+            #       run: |
+            #         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            #     - name: Publish
+            #       run: cargo publish --token ${{ secrets.CARGO_API_TOKEN }}
+            # build-deb:
+            #   name: Build and upload deb package
+            #   runs-on: ubuntu-latest
+            #   steps:
+            #     - uses: actions/checkout@v4
+            #     - name: Install Rust
+            #       run: |
+            #         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            #     - name: Install packages
+            #       run: apt install build-essential pkg-config libssl-dev
+            #     - name: Install cargo-deb
+            #       run: cargo install cargo-deb
+            #     - name: Create package
+            #       id: create-deb
+            #       run: |
+            #         cargo deb --deb-revision=""  # --deb-revision="" removes the -1 post tag
+            #         cd target/debian
+            #         DEB_FILE=$(find file-checksum*_*.deb)
+            #     - name: Upload deb package to release
+            #       uses: svenstaro/upload-release-action@v2
+            #       with:
+            #         repo_token: ${{ secrets.GITHUB_TOKEN}}
+            #         file: target/debian/${{ steps.create-deb.DEB_FILE }}
+            #         asset_name: ${{ steps.create-deb.DEB_FILE }}
+            #         tag: ${{ github.ref }}
