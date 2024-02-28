@@ -7,6 +7,7 @@ pub enum ChecksumType {
     Md5,
     Sha1,
     Sha256,
+    Sha512,
 }
 
 impl fmt::Display for ChecksumType {
@@ -15,6 +16,7 @@ impl fmt::Display for ChecksumType {
             ChecksumType::Md5 => write!(f, "md5"),
             ChecksumType::Sha1 => write!(f, "sha1"),
             ChecksumType::Sha256 => write!(f, "sha256"),
+            ChecksumType::Sha512 => write!(f, "sha512"),
         }
     }
 }

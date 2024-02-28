@@ -12,7 +12,7 @@ use clap::Parser;
 use colored::*;
 use hex::encode;
 use sha1::Sha1;
-use sha2::{Digest, Sha256};
+use sha2::{Digest, Sha256, Sha512};
 
 use crate::cli::{ChecksumType, Cli, Command};
 
@@ -69,6 +69,16 @@ fn process_checksum(
             let bytes = fs::read(file_path);
             if let Ok(b) = bytes {
                 let mut hasher = Sha256::new();
+                hasher.update(b);
+                encode(hasher.finalize())
+            } else {
+                bail!("Error opening file");
+            }
+        }
+        ChecksumType::Sha512 => {
+            let bytes = fs::read(file_path);
+            if let Ok(b) = bytes {
+                let mut hasher = Sha512::new();
                 hasher.update(b);
                 encode(hasher.finalize())
             } else {
@@ -232,6 +242,12 @@ mod tests {
             ChecksumType::Sha256 => {
                 let bytes = fs::read(file).unwrap();
                 let mut hasher = Sha256::new();
+                hasher.update(bytes);
+                encode(hasher.finalize())
+            }
+            ChecksumType::Sha512 => {
+                let bytes = fs::read(file).unwrap();
+                let mut hasher = Sha512::new();
                 hasher.update(bytes);
                 encode(hasher.finalize())
             }
@@ -468,6 +484,108 @@ mod tests {
 
         let checksum_1 = get_checksum(&test_file_1, ChecksumType::Sha256);
         let checksum_2 = get_checksum(&test_file_2, ChecksumType::Sha256);
+        let result = fs::read_to_string(&output_file).unwrap();
+
+        assert!(result.contains(&checksum_1));
+        assert!(result.contains(&checksum_2));
+    }
+
+    #[test]
+    fn generate_sha512() {
+        let test_file = fake_file_path();
+        let base = tempdir().unwrap().path().to_path_buf();
+        fs::create_dir_all(&base).unwrap();
+        let output_file = base.join("output.txt");
+
+        process_checksum(
+            &test_file,
+            &Some(output_file.clone()),
+            &ChecksumType::Sha512,
+            false,
+            false,
+        )
+        .unwrap();
+
+        assert!(output_file.exists());
+
+        let checksum = get_checksum(&test_file, ChecksumType::Sha512);
+        let result = fs::read_to_string(&output_file).unwrap();
+
+        assert!(result.contains(&checksum));
+    }
+
+    #[test]
+    fn generate_sha512_file_directory_overwrite() {
+        let test_file_1 = fake_file_path();
+        let test_file_2 = fake_file_path_2();
+        let base = tempdir().unwrap().path().to_path_buf();
+        fs::create_dir_all(&base).unwrap();
+        let output_file = base.join("output.txt");
+
+        process_checksum(
+            &test_file_1,
+            &Some(output_file.clone()),
+            &ChecksumType::Sha512,
+            true,
+            false,
+        )
+        .unwrap();
+
+        assert!(output_file.exists());
+
+        let checksum_1 = get_checksum(&test_file_1, ChecksumType::Sha512);
+        let result_1 = fs::read_to_string(&output_file).unwrap();
+
+        assert!(result_1.contains(&checksum_1));
+
+        process_checksum(
+            &test_file_2,
+            &Some(output_file.clone()),
+            &ChecksumType::Sha512,
+            true,
+            false,
+        )
+        .unwrap();
+
+        assert!(output_file.exists());
+
+        let checksum_2 = get_checksum(&test_file_2, ChecksumType::Sha512);
+        let result_2 = fs::read_to_string(&output_file).unwrap();
+
+        assert!(!result_2.contains(&checksum_1));
+        assert!(result_2.contains(&checksum_2));
+    }
+
+    #[test]
+    fn generate_sha512_file_directory_no_overwrite() {
+        let test_file_1 = fake_file_path();
+        let test_file_2 = fake_file_path_2();
+        let base = tempdir().unwrap().path().to_path_buf();
+        fs::create_dir_all(&base).unwrap();
+        let output_file = base.join("output.txt");
+
+        process_checksum(
+            &test_file_1,
+            &Some(output_file.clone()),
+            &ChecksumType::Sha512,
+            false,
+            false,
+        )
+        .unwrap();
+
+        process_checksum(
+            &test_file_2,
+            &Some(output_file.clone()),
+            &ChecksumType::Sha512,
+            false,
+            false,
+        )
+        .unwrap();
+
+        assert!(output_file.exists());
+
+        let checksum_1 = get_checksum(&test_file_1, ChecksumType::Sha512);
+        let checksum_2 = get_checksum(&test_file_2, ChecksumType::Sha512);
         let result = fs::read_to_string(&output_file).unwrap();
 
         assert!(result.contains(&checksum_1));
