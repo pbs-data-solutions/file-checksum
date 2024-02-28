@@ -8,11 +8,20 @@ This program will generate checksums for either a single file, or all the files 
 
 ## Installation
 
+Install with cargo:
+
 ```sh
-cargo install --path .
+cargo install file-checksum
 ```
 
-File Checkksum can also be installed with binaries provided with each release
+Install on Debian/Ubuntu:
+
+```sh
+curl -LO https://github.com/sanders41/python-project-generator/releases/download/v1.0.16/python-project-generator_1.0.16_amd64.deb
+sudo dpkg -i python-project-generator_1.0.16_amd64.deb
+```
+
+file-checksum can also be installed with binaries provided with each release
 [here](https://github.com/pbs-data-solutions/file-checksum/releases).
 
 ## Usage
