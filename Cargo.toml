@@ -1,0 +1,29 @@
+[package]
+name = "file-checksum"
+version = "1.0.1"
+edition = "2021"
+authors = ["Paul Sanders <paul@pbsdatasolutions.com>"]
+description = "Generate and validate checksums for files"
+documentation = "https://github.com/pbs-data-solutions/file-checksum"
+homepage = "https://github.com/pbs-data-solutions/file-checksum"
+repository = "https://github.com/pbs-data-solutions/file-checksum"
+readme = "README.md"
+keywords = ["checksum", "hash"]
+categories = ["command-line-utilities"]
+license = "MIT"
+
+[[bin]]
+name = "checksum"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.80"
+clap = { version = "4.5.1", features = ["suggestions", "derive"] }
+colored = "2.0.4"
+hex = "0.4.3"
+md5 = "0.7.0"
+sha1 = "0.10.6"
+sha2 = "0.10.8"
+
+[dev-dependencies]
+tempfile = "3.10.0"

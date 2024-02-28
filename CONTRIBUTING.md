@@ -12,15 +12,15 @@ for something that interests you.
 
 Please include:
 
-1. A short, self-contained Python snippet reproducing the problem. You can format the code by using
-[GitHub markdown](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github). For
-example:
+1.  A short, self-contained Python snippet reproducing the problem. You can format the code by using
+    [GitHub markdown](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github). For
+    example:
 
-    ```sh
-    checksum generate /home/my_files -o /home/checksums.txt
-    ```
+        ```sh
+        checksum generate /home/my_files -o /home/checksums.txt
+        ```
 
-2. Explain what is currently happening and what you expect instead.
+2.  Explain what is currently happening and what you expect instead.
 
 ## Working on the code
 
@@ -39,17 +39,6 @@ git remote add upstream git@github.com:pbs-data-solutions/file-checksum
 
 This creates the directory file-checksum and connects your repository to the upstream
 (main project) repository.
-
-### Working with the code
-
-Note: This project uses Poetry to manage dependencies. If you do not already have Poetry installed
-you will need to install it with the instructions [here](https://python-poetry.org/docs/#installation)
-
-First the requirements need to be installed.
-
-```sh
-poetry install
-```
 
 ### Creating a branch
 
@@ -71,6 +60,34 @@ main version. To update your local main branch, you can do:
 git checkout main
 git pull upstream main --ff-only
 ```
+
+### Code linting, formatting, and tests
+
+You can run linting on your code at any time with:
+
+```sh
+cargo clippy --all-targets
+```
+
+To format the code run:
+
+```sh
+cargo fmt --all
+```
+
+To run the tests:
+
+```sh
+cargo test
+```
+
+To ensure the code compiles run:
+
+```sh
+cargo check --all-targets
+```
+
+Be sure to run all these checks before submitting your pull request.
 
 ### Code Standards and tests (ruff, black, mypy, pytest, tox, and pre-commit)
 
@@ -103,51 +120,6 @@ also run pre-commit at any time with:
 ```sh
 pre-commit run --all-files
 ```
-
-### Type Hints
-
-At a minimum all variables/arguments that receive data should contain type hints, and all
-functions/methods should specify the return type.
-
-Accepted examples:
-
-```py
-def my_function(argument: str) -> None:
-    ...
-
-
-def another_function(num: int) -> int:
-    return num + 1
-```
-
-Rejected examples:
-
-```py
-def my_function(argument):
-    ...
-
-
-def another_function(num):
-    return num + 1
-```
-
-Type hints on files in the tests directory are not required.
-
-### Testing
-
-This project uses [pytest](https://docs.pytest.org/en/stable/) for testing. Please ensure that any
-additions/changes you make to the code have tests to go along with them. Code coverage should not
-drop blow it's current level with any pull requests you make, if it does the pull request will not
-be accepted. You can view the current coverage level in the codecov badge on the
-[main github page](https://github.com/pbs-data-solutions/file-checksum). You can run tests and see
-the code coverage by running:
-
-```sh
-poetry run pytest
-```
-
-In additon to mainting the coverage percentage please ensure that all tests are passing before
-submitting a pull request.
 
 ## Committing your code
 

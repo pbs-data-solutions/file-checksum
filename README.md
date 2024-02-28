@@ -8,34 +8,30 @@
 
 Generate checksums for files.
 
-CVM requires that submitted data files include a checksum to verify the file has not changed. This
-program will generate those checksums for either a single file, or all the files in a directory.
+This program will generate checksums for either a single file, or all the files in a directory.
 
 ## Installation
 
-Installation with [pipx](https://github.com/pypa/pipx) is recommended.
-
 ```sh
-pipx install file-checksum
-```
-
-Alternatively the program can be installed with pip.
-
-```sh
-pip install file-checksum
+cargo install --path .
 ```
 
 ## Usage
 
 ### Generate
 
-* Arguments
-  * checksum_path: Path to the directory or file for which to generate checksums [required]
-* Options
-  * --output-file, -o: Path to the file to same the checksums. Must be a .txt file. If no path is
-  provided the output will be printed to the screen and not saved. [default: None]
-  * --checksum-type, -c: The type of checksum to generate. Supported types are md5, sha1, and sha256. [default: sha256]
-  * --verbose: Provides more output while running
+- Arguments:
+
+  - <CHECKSUM_PATH> Path to the directory or file for which to generate checksums
+
+- Options:
+  - -o, --output-file <OUTPUT_FILE> Path to the file to same the checksums. Must be a .txt file. If
+    no path is provided the output will be printed to the screen and not saved
+  - -c, --checksum-type <CHECKSUM_TYPE> The type of checksum to generate. [default: sha256]
+    [possible values: md5, sha1, sha256]
+  - --overwrite Overwrite the output file rather than appending to it
+  - -v, --verbose Provides more output while running
+  - -h, --help Print help
 
 #### Example
 
@@ -55,7 +51,8 @@ sha256 checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b85
 ```
 
 Subsequent runs pointing to the same output file will append the results to the file so checksums
-from different directores can be save to the same file.
+from different directores can be save to the same file. Passing the `--overwrite` flag will clear
+the contents of the file before writing instead of appending to the file.
 
 ## Contributing
 
