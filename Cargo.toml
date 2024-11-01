@@ -17,7 +17,7 @@ name = "checksum"
 path = "src/main.rs"
 
 [dependencies]
-anyhow = "1.0.91"
+anyhow = "1.0.92"
 clap = { version = "4.5.20", features = ["suggestions", "derive"] }
 colored = "2.0.4"
 hex = "0.4.3"
