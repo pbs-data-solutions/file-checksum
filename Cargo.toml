@@ -19,7 +19,7 @@ path = "src/main.rs"
 [dependencies]
 anyhow = "1.0.95"
 clap = { version = "4.5.21", features = ["suggestions", "derive"] }
-colored = "2.0.4"
+colored = "2.2.0"
 hex = "0.4.3"
 md5 = "0.7.0"
 sha1 = "0.10.6"
