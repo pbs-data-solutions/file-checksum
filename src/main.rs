@@ -199,11 +199,11 @@ fn main() {
 mod tests {
     use super::*;
     use tempfile::tempdir;
+    use tmp_path::tmp_path;
 
+    #[tmp_path]
     fn fake_file_path() -> PathBuf {
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let file_path = base.join("test.txt");
+        let file_path = tmp_path.join("test.txt");
 
         let mut file = File::create(&file_path).unwrap();
         file.write_all(b"This is a test").unwrap();
@@ -211,10 +211,9 @@ mod tests {
         file_path
     }
 
+    #[tmp_path]
     fn fake_file_path_2() -> PathBuf {
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let file_path = base.join("test2.txt");
+        let file_path = tmp_path.join("test2.txt");
 
         let mut file = File::create(&file_path).unwrap();
         file.write_all(b"This is another test").unwrap();
@@ -269,11 +268,10 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_md5_file() {
         let test_file = fake_file_path();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file,
@@ -293,12 +291,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_md5_file_directory_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,
@@ -335,12 +332,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_md5_file_directory_no_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,
@@ -371,11 +367,10 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha256_file() {
         let test_file = fake_file_path();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file,
@@ -395,12 +390,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha256_file_directory_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,
@@ -437,12 +431,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha256_file_directory_no_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,
@@ -473,11 +466,10 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha512() {
         let test_file = fake_file_path();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file,
@@ -497,12 +489,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha512_file_directory_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,
@@ -539,12 +530,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha512_file_directory_no_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,
@@ -575,11 +565,10 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha1_file() {
         let test_file = fake_file_path();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file,
@@ -599,12 +588,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha1_file_directory_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,
@@ -641,12 +629,11 @@ mod tests {
     }
 
     #[test]
+    #[tmp_path]
     fn generate_sha1_file_directory_no_overwrite() {
         let test_file_1 = fake_file_path();
         let test_file_2 = fake_file_path_2();
-        let base = tempdir().unwrap().path().to_path_buf();
-        fs::create_dir_all(&base).unwrap();
-        let output_file = base.join("output.txt");
+        let output_file = tmp_path.join("output.txt");
 
         process_checksum(
             &test_file_1,

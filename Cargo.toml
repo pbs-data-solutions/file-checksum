@@ -27,3 +27,4 @@ sha2 = "0.10.8"
 
 [dev-dependencies]
 tempfile = "3.14.0"
+tmp-path = "0.1.0"
