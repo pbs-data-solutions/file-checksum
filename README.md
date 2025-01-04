@@ -1,6 +1,6 @@
 # File Checksum
 
-[![Tests Status](https://github.com/pbs-data-solutions/file-checksum/workflows/Testing/badge.svg?branch=main&event=push)](https://github.com/pbs-data-solutions/file-checksum/actions?query=workflow%3ATesting+branch%3Amain+event%3Apush)
+[![Tests Status](https://github.com/pbs-data-solutions/file-checksum/actions/workflows/testing.yaml/badge.svg?branch=main&event=push)](https://github.com/pbs-data-solutions/file-checksum/actions?query=workflow%3ATesting+branch%3Amain+event%3Apush)
 
 Generate checksums for files.
 
