@@ -142,7 +142,7 @@ fn main() {
             verbose,
         } => {
             if !checksum_path.exists() {
-                print_error(&format!("Path {:?} does not exist", checksum_path));
+                print_error(&format!("Path {checksum_type:?} does not exist"));
                 exit(1);
             }
 
