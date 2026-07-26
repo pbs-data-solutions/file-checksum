@@ -101,7 +101,7 @@ fn process_checksum(
                 let file_result = OpenOptions::new().append(true).open(o);
 
                 if let Ok(mut file) = file_result {
-                    if let Err(e) = writeln!(file, "{}", &checksum_output) {
+                    if let Err(e) = writeln!(file, "{}", checksum_output) {
                         bail!("Couldn't write to file: {}", e);
                     }
                 } else {
@@ -111,7 +111,7 @@ fn process_checksum(
                 let file = File::create(o);
 
                 if let Ok(mut f) = file {
-                    if let Err(e) = writeln!(f, "{}", &checksum_output) {
+                    if let Err(e) = writeln!(f, "{}", checksum_output) {
                         bail!("Error writing file: {}", e);
                     }
                 } else {
@@ -187,7 +187,7 @@ fn main() {
             } else {
                 print_error(&format!(
                     "Error processing files in {:?} directory",
-                    &checksum_path
+                    checksum_path
                 ));
                 exit(1);
             }
