@@ -12,15 +12,15 @@ for something that interests you.
 
 Please include:
 
-1.  A short, self-contained Python snippet reproducing the problem. You can format the code by using
-    [GitHub markdown](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github). For
-    example:
+1. A short, self-contained Python snippet reproducing the problem. You can format the code by using
+   [GitHub markdown](https://docs.github.com/en/free-pro-team@latest/github/writing-on-github). For
+   example:
 
-        ```sh
-        checksum generate /home/my_files -o /home/checksums.txt
-        ```
+```sh
+checksum generate /home/my_files -o /home/checksums.txt
+```
 
-2.  Explain what is currently happening and what you expect instead.
+2. Explain what is currently happening and what you expect instead.
 
 ## Working on the code
 
@@ -89,7 +89,7 @@ cargo check --all-targets
 
 Be sure to run all these checks before submitting your pull request.
 
-### Code Standards and tests (ruff, black, mypy, pytest, tox, and pre-commit)
+### Code Standards and tests (ruff, black, mypy, pytest, tox, and prek)
 
 file-checksum [ruff](https://github.com/charliermarsh/ruff), [Black](https://github.com/psf/black),
 and [mypy](https://mypy.readthedocs.io/en/stable/) to ensure consistent code formatting.
@@ -107,18 +107,18 @@ poetry run black file_checksum tests
 poetry run mypy .
 ```
 
-It is also suggested that you setup [pre-commit](https://pre-commit.com/) in order to run linting
-when you commit changes to you branch. To setup pre-commit for this project run:
+It is also suggested that you setup [prek](https://github.com/j178/prek) in order to run linting
+when you commit changes to you branch. To setup prek for this project run:
 
 ```sh
-pre-commit install
+prek install
 ```
 
-After this pre-commit will automatically run any time you check in code to your branches. You can
-also run pre-commit at any time with:
+After this prek will automatically run any time you check in code to your branches. You can
+also run prek at any time with:
 
 ```sh
-pre-commit run --all-files
+prek run --all-files
 ```
 
 ## Committing your code
@@ -142,7 +142,7 @@ Now you can commit your changes in your local repository:
 git commit -am 'Some short helpful message to describe your changes'
 ```
 
-If you setup pre-commit and any of the tests fail the commit will be cancelled and you will need to
+If you setup prek and any of the tests fail the commit will be cancelled and you will need to
 fix any errors. Once the errors are fixed you can run the same git commit command again.
 
 ## Push your changes
