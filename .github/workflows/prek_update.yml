@@ -16,10 +16,8 @@ jobs:
         uses: astral-sh/setup-uv@v9.0.0
         with:
           enable-cache: true
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: 3.14
+      - name: Install prek
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/j178/prek/releases/download/v0.4.10/prek-installer.sh | sh
       - name: Run Update
         run: uv run prek autoupdate
       - name: Create Pull Request
