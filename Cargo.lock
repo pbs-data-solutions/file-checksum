@@ -110,7 +110,7 @@ dependencies = [
  "heck",
  "proc-macro2",
  "quote",
- "syn 3.0.3",
+ "syn",
 ]
 
 [[package]]
@@ -335,17 +335,6 @@ checksum = "7da8b5736845d9f2fcb837ea5d9e2628564b3b043a70948a3f0b778838c5fb4f"
 
 [[package]]
 name = "syn"
-version = "2.0.118"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b9ae57f904213ebb649ce6895b8a66c66f0203b9319718f69a5612a065b1422"
-dependencies = [
- "proc-macro2",
- "quote",
- "unicode-ident",
-]
-
-[[package]]
-name = "syn"
 version = "3.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "53e9bae58849f64dfa4f5d5ae372c8341f7305f82a3868709269343628b659a3"
@@ -370,13 +359,12 @@ dependencies = [
 
 [[package]]
 name = "tmp-path"
-version = "0.1.2"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a626bc67f14c4647484ad5b5f1fe946349d83aa20ccd65cbf290e8ef03716d7c"
+checksum = "3801390d3d35be6c636b682daeef481ec279fae7eafa0632151fedf0f92689c8"
 dependencies = [
  "quote",
- "syn 2.0.118",
- "tempfile",
+ "syn",
 ]
 
 [[package]]
